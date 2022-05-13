@@ -1,0 +1,1 @@
+export const HostConst ='https://localhost:7158/'
