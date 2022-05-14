@@ -40,8 +40,10 @@ import {
       });
 
       const datatoPost={
+        userId: userInfo.id,
         TotalPrice : order.totalPrice + order.shippingPrice,
         ShippingAddress : order.shippingAddress.address,
+        ShippingPrice : order.shippingPrice,
         CartFinalList : cartFinallist
           }
       let data ={}
@@ -65,14 +67,22 @@ import {
 };
 
 export const detailsOrder =(orderId) => async(dispatch,getState)=>{
-
+    // const {
+    //     order: { orderdetails },
+    //   } = getState();
     dispatch({type : ORDER_DETAILS_REQUEST, payload: orderId});
+
     const {
         userSignin:{userInfo},
     } = getState();
     try{
         const {data} = await Axios.get(`${HostConst}kartWebstore/GetOrder/${orderId}`);
         dispatch({type :ORDER_DETAILS_SUCCESS,payload:data});
+        
+    // localStorage.setItem(
+    //     'orderDetails',
+    //     JSON.stringify(getState().order.orderDetails)
+    //   );
     }
     catch(error){
         const message = error.response && error.response.data.message?
